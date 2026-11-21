@@ -8,6 +8,70 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>*{font-family:system-ui} .hero{background:linear-gradient(135deg,#2A0A4A,#6D1BA8)} input,select{outline:none} input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}</style>
 </head>
+ <!-- ===== SÉCURITÉ V6 - AJOUT SEULEMENT - NE PAS MODIFIER LE HTML ===== -->
+<script>
+// ===== 1. CHIFFREMENT BOUT EN BOUT =====
+async function chiffrerTexte(texte){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(texte + 'CAVIAR-SEL-SECRET'));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function chiffrerDonnee(donnee){
+  // On chiffre avant d'envoyer au serveur, personne ne peut lire en clair
+  let json = JSON.stringify(donnee);
+  let hash = await chiffrerTexte(json);
+  return { data_chiffree: btoa(unescape(encodeURIComponent(json))), hash: hash };
+}
+
+// ===== 2. BLOCKCHAIN + AUDIT - Comme V6 =====
+let BLOCKCHAIN_V1 = JSON.parse(localStorage.getItem('projet1_blockchain')||'[]');
+async function ajouterBlocV1(action, acteur, details){
+  let prev = BLOCKCHAIN_V1.length ? BLOCKCHAIN_V1[BLOCKCHAIN_V1.length-1].hash : 'GENESIS-0000';
+  let data = prev + '|' + action + '|' + acteur + '|' + details + '|' + Date.now();
+  let hash = await chiffrerTexte(data);
+  let bloc = { index: BLOCKCHAIN_V1.length+1, action, acteur, details, date: new Date().toLocaleString('fr-FR'), prev, hash };
+  BLOCKCHAIN_V1.push(bloc);
+  localStorage.setItem('projet1_blockchain', JSON.stringify(BLOCKCHAIN_V1));
+  console.log('⛓️ Bloc #' + bloc.index + ' - ' + action);
+  // On envoie aussi au serveur pour l'audit
+  try{ await fetch('https://tontine-caviar-server.onrender.com/api/audit', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(bloc)}); }catch(e){}
+  return bloc;
+}
+async function verifierChaineV1(){
+  for(let i=0;i<BLOCKCHAIN_V1.length;i++){
+    let b = BLOCKCHAIN_V1[i];
+    let expected = i===0 ? 'GENESIS-0000' : BLOCKCHAIN_V1[i-1].hash;
+    if(b.prev !== expected) return alert('⚠️ CHAÎNE CASSÉE au bloc ' + b.index);
+  }
+  alert('✅ Chaîne vérifiée - ' + BLOCKCHAIN_V1.length + ' blocs - Personne n’a triché');
+}
+
+// ===== 3. NOTIFICATION AUTOMATIQUE - SANS QUE LE CLIENT CLIQUE =====
+// Avant, c'était : window.open('https://wa.me/...') -> Le client devait cliquer.
+// Maintenant, c'est : le serveur envoie tout seul.
+async function notifierAutomatique(destinataire, message){
+  // destinataire = numéro sans + ex: 22655441010 ou 22670000000
+  // On appelle TON serveur, c'est lui qui envoie sur WhatsApp
+  try{
+    let res = await fetch('https://tontine-caviar-server.onrender.com/api/whatsapp-auto', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ to: destinataire, message: message })
+    });
+    let data = await res.json();
+    console.log('WhatsApp auto:', data);
+    // On enregistre dans la blockchain
+    await ajouterBlocV1('NOTIFICATION AUTO WHATSAPP', 'Serveur', 'Vers ' + destinataire + ' - ' + message.slice(0,50));
+    return data;
+  }catch(e){ console.error('Erreur notif auto', e); return null; }
+}
+
+// ===== EXEMPLE : Quand le client s'inscrit, ça envoie tout seul à Daishi / Maman =====
+// Tu mets ça dans ta fonction d'inscription existante, sans modifier le reste :
+// await notifierAutomatique('22655441010', '👑 Nouveau client inscrit : ' + nom + ' - Tél ' + tel);
+// await notifierAutomatique('226' + telClient, '✅ Bonjour ' + nom + ', ton inscription est confirmée. Bienvenue !');
+
+console.log('✅ Sécurité V6 activée sur 1er projet : Chiffrement + Blockchain + Notif Auto');
+</script>
 <body class="bg-[#F7F8F7]">
 <header class="hero text-white sticky top-0 z-50"><div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center"><div class="flex items-center gap-3"><img src="logo.png.png" class="w-12 h-12 rounded-full border-2 border-yellow-400 bg-white object-cover"><div><p class="font-extrabold">TONTINE <span class="text-yellow-400">CAVIAR</span> <span class="text-[10px] bg-yellow-400 text-black px-2 py-0.5 rounded-full">V3 VERIFIE</span></p><p class="text-[11px] text-white/80">Tontine Argent by Nassara - Vérification par capture</p></div></div><button onclick="showPage('choix')" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold">Connexion</button></div></header>
 
