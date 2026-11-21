@@ -22,7 +22,6 @@ input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
 </head>
 <body class="bg-[#F7F8F7] text-[#111827]">
 
-<!-- ===== HEADER TONTINE CAVIAR ===== -->
 <header class="hero text-white sticky top-0 z-50">
 <div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
 <div class="flex items-center gap-3">
@@ -39,7 +38,6 @@ input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
 </div>
 </header>
 
-<!-- ===== HERO TONTINE CAVIAR ===== -->
 <section id="hero" class="hero text-white pb-10 pt-6">
 <div class="max-w-6xl mx-auto px-4">
 <div class="text-center mb-6">
@@ -52,7 +50,6 @@ input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
 <span class="bg-[#F2C94C] text-black px-3 py-1 rounded-full text-xs font-bold">✅ 100% Vérifié</span>
 </div>
 </div>
-
 <div class="grid md:grid-cols-2 gap-8 items-center">
 <div>
 <div class="inline-flex bg-white/10 px-3 py-1 rounded-full text-xs">✅ 100% Vérifié • Orange Money / Moov Money</div>
@@ -182,9 +179,9 @@ input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
 </footer>
 
 <script>
-// ===== CONFIG TONTINE CAVIAR - METS TES CLÉS SUPABASE ICI =====
-const SUPABASE_URL = "https://TON-PROJET.supabase.co";
-const SUPABASE_KEY = "eyJ...TON-ANON-KEY...";
+// ===== CONFIG TONTINE CAVIAR - CLÉS DÉJÀ INTÉGRÉES =====
+const SUPABASE_URL = "https://bzobtkfhqvslgncxvvvp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_QpV1oaJYBpuJ-IR43YP_CQ_VWaNFrXP";
 const CINETPAY_API_KEY = "";
 const CINETPAY_SITE_ID = "";
 let supabaseClient = null;
