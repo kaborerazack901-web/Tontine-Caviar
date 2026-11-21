@@ -3,270 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tontine Caviar V2 - Maman & Membres</title>
+<title>Tontine Caviar V3 - Vérification Capture</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{font-family:'Plus Jakarta Sans',sans-serif}
-.hero{background:linear-gradient(135deg,#2A0A4A 0%,#4B0E7A 55%,#6D1BA8 100%)}
-.gold{color:#F2C94C}.card{box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid #EEF2EF}
-.tab-active{background:#2A0A4A;color:white!important}
-input,select{outline:none}input:focus,select:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
-.badge-pay{background:#ECFDF5;color:#065F46}.badge-imp{background:#FEF2F2;color:#991B1B}.badge-att{background:#FFFBEB;color:#92400E}
-</style>
+<style>*{font-family:system-ui} .hero{background:linear-gradient(135deg,#2A0A4A,#6D1BA8)} input,select{outline:none} input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}</style>
 </head>
 <body class="bg-[#F7F8F7]">
-<header class="hero text-white sticky top-0 z-50">
-<div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
-<div class="flex items-center gap-3">
-<img src="logo.png" class="w-12 h-12 rounded-full object-cover border-2 border-[#F2C94C] bg-white">
-<div><p class="font-extrabold text-lg leading-none">TONTINE <span class="gold">CAVIAR</span> <span class="text-[10px] bg-[#F2C94C] text-black px-2 py-0.5 rounded-full">V2 PRO</span></p><p class="text-[11px] text-white/80">Tontine Argent by Nassara</p></div>
-</div>
-<div id="headerBtns" class="flex gap-2">
-<button onclick="showPage('choix')" class="bg-white text-[#2A0A4A] px-4 py-2 rounded-full text-sm font-bold">Connexion</button>
-</div>
-</div>
-</header>
+<header class="hero text-white sticky top-0 z-50"><div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center"><div class="flex items-center gap-3"><img src="logo.png" class="w-12 h-12 rounded-full border-2 border-yellow-400 bg-white object-cover"><div><p class="font-extrabold">TONTINE <span class="text-yellow-400">CAVIAR</span> <span class="text-[10px] bg-yellow-400 text-black px-2 py-0.5 rounded-full">V3 VERIFIE</span></p><p class="text-[11px] text-white/80">Tontine Argent by Nassara - Vérification par capture</p></div></div><button onclick="showPage('choix')" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold">Connexion</button></div></header>
 
-<!-- CHOIX ROLE -->
+<!-- CHOIX -->
 <section id="page-choix" class="max-w-4xl mx-auto px-4 py-8">
-<div class="text-center"><h1 class="text-3xl font-extrabold">Bienvenue sur <span class="text-purple-800">Tontine Caviar</span></h1><p class="text-gray-500 mt-1">Choisis ton profil, tu ne verras que ta page.</p></div>
+<div class="text-center"><h1 class="text-3xl font-extrabold">Tontine Caviar - <span class="text-purple-800">Vérification Sécurisée</span></h1><p class="text-gray-500 mt-1">Plus de faux ID. Capture → Maman vérifie → Robot confirme.</p></div>
 <div class="grid md:grid-cols-2 gap-4 mt-6">
-<div onclick="choisirRole('membre')" class="bg-white rounded-[20px] p-6 card cursor-pointer hover:border-purple-400 border-2">
-<div class="text-5xl">👤</div><h2 class="font-extrabold text-xl mt-2">Je suis MEMBRE</h2><p class="text-sm text-gray-500 mt-1">Je paie ma tontine, je vois mon historique, mon ordre de prise, mes tours restants. Je ne vois pas les autres membres.</p><button class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-4">Entrer comme Membre →</button>
-</div>
-<div onclick="choisirRole('maman')" class="bg-[#2A0A4A] text-white rounded-[20px] p-6 cursor-pointer hover:opacity-90">
-<div class="text-5xl">👑</div><h2 class="font-extrabold text-xl mt-2">Je suis MAMAN TONTINE</h2><p class="text-sm text-white/70 mt-1">Je crée les groupes, je fixe le nombre, le montant, la date de début. Je contrôle qui paie, qui est en retard, qui je supprime / priorise.</p><button class="w-full bg-[#F2C94C] text-black py-3 rounded-xl font-bold mt-4">Entrer comme Maman 👑</button>
-<p class="text-[11px] text-white/50 mt-2 text-center">Accès Maman : 55 44 10 10 / 65 47 19 96</p>
-</div>
+<div onclick="choisirRole('membre')" class="bg-white rounded-[20px] p-6 border-2 cursor-pointer"><div class="text-5xl">👤</div><h2 class="font-extrabold text-xl mt-2">Je suis MEMBRE</h2><p class="text-sm text-gray-500">Je paie, j'upload ma capture, j'attends la validation de la Maman.</p><button class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-4">Entrer comme Membre →</button></div>
+<div onclick="choisirRole('maman')" class="bg-[#2A0A4A] text-white rounded-[20px] p-6 cursor-pointer"><div class="text-5xl">👑</div><h2 class="font-extrabold text-xl mt-2">Je suis MAMAN TONTINE</h2><p class="text-sm text-white/70">Je vérifie les captures, je clique Dépôt reçu, le robot confirme tout seul.</p><button class="w-full bg-yellow-400 text-black py-3 rounded-xl font-bold mt-4">Entrer comme Maman 👑</button><p class="text-[11px] text-white/50 mt-2 text-center">Maman : 55441010 / 65471996 - Code : 5544</p></div>
 </div>
 </section>
 
-<!-- CONNEXION MEMBRE -->
-<section id="page-login-membre" class="hidden max-w-md mx-auto px-4 py-8">
-<div class="bg-white rounded-[20px] p-6 card"><h2 class="font-extrabold text-xl">👤 Connexion Membre</h2>
-<input id="mTel" placeholder="Téléphone ex: 70000000" class="w-full border rounded-xl px-3 py-3 mt-3">
-<input id="mNom" placeholder="Prénom + Nom" class="w-full border rounded-xl px-3 py-3 mt-2">
-<input id="mMains" type="number" min="1" max="3" placeholder="Nombre de mains : 1, 2 ou 3" class="w-full border rounded-xl px-3 py-3 mt-2">
-<select id="mGroupe" class="w-full border rounded-xl px-3 py-3 mt-2"></select>
-<button onclick="loginMembre()" class="w-full bg-[#F2C94C] py-3 rounded-xl font-extrabold mt-3">Entrer dans mon espace →</button>
-<p class="text-xs text-gray-400 mt-2 text-center">1 main = 1 part, 2 mains = 2 parts, 3 mains = 3 parts. L'ordre de prise est calculé automatiquement.</p>
-<button onclick="showPage('choix')" class="w-full text-sm mt-2 text-gray-500">← Retour</button></div>
-</section>
+<!-- LOGIN MEMBRE -->
+<section id="page-login-membre" class="hidden max-w-md mx-auto px-4 py-8"><div class="bg-white rounded-[20px] p-6 border"><h2 class="font-extrabold text-xl">👤 Connexion Membre</h2><input id="mTel" placeholder="Téléphone ex: 70000000" class="w-full border rounded-xl px-3 py-3 mt-3"><input id="mNom" placeholder="Prénom + Nom" class="w-full border rounded-xl px-3 py-3 mt-2"><input id="mMains" type="number" min="1" max="3" placeholder="Mains : 1, 2 ou 3" class="w-full border rounded-xl px-3 py-3 mt-2"><select id="mGroupe" class="w-full border rounded-xl px-3 py-3 mt-2"></select><button onclick="loginMembre()" class="w-full bg-yellow-400 py-3 rounded-xl font-extrabold mt-3">Entrer →</button><button onclick="showPage('choix')" class="w-full text-sm mt-2 text-gray-500">← Retour</button></div></section>
 
-<!-- CONNEXION MAMAN -->
-<section id="page-login-maman" class="hidden max-w-md mx-auto px-4 py-8">
-<div class="bg-white rounded-[20px] p-6 card"><h2 class="font-extrabold text-xl">👑 Connexion Maman Tontine</h2>
-<input id="mamTel" placeholder="Téléphone Maman ex: 55823626" class="w-full border rounded-xl px-3 py-3 mt-3">
-<input id="mamCode" type="password" placeholder="Code Maman : 5544" class="w-full border rounded-xl px-3 py-3 mt-2">
-<button onclick="loginMaman()" class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-3">Entrer dans le tableau de bord 👑</button>
-<p class="text-xs text-gray-400 mt-2 text-center">Seule la Maman a accès au contrôle total.</p>
-<button onclick="showPage('choix')" class="w-full text-sm mt-2 text-gray-500">← Retour</button></div>
-</section>
+<!-- LOGIN MAMAN -->
+<section id="page-login-maman" class="hidden max-w-md mx-auto px-4 py-8"><div class="bg-white rounded-[20px] p-6 border"><h2 class="font-extrabold text-xl">👑 Connexion Maman</h2><input id="mamTel" placeholder="55441010 ou 65471996" class="w-full border rounded-xl px-3 py-3 mt-3"><input id="mamCode" type="password" placeholder="Code : 5544" class="w-full border rounded-xl px-3 py-3 mt-2"><button onclick="loginMaman()" class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-3">Entrer 👑</button><button onclick="showPage('choix')" class="w-full text-sm mt-2 text-gray-500">← Retour</button></div></section>
 
 <!-- ESPACE MEMBRE -->
 <section id="page-membre" class="hidden max-w-6xl mx-auto px-4 py-6">
-<div class="bg-white rounded-[20px] p-5 card flex justify-between items-center flex-wrap gap-2"><div><h2 class="font-extrabold text-xl">Bonjour <span id="membreNomAffiche">Membre</span> 👋</h2><p class="text-sm text-gray-500">Groupe : <b id="membreGroupeAffiche">—</b> • <span id="membreMainsAffiche">—</span> • Ordre de prise : <b id="membreOrdreAffiche" class="text-purple-700">—</b></p></div><button onclick="deconnecter()" class="bg-gray-100 px-4 py-2 rounded-full text-sm font-bold">Déconnexion</button></div>
+<div class="bg-white rounded-[20px] p-5 border flex justify-between flex-wrap gap-2"><div><h2 class="font-extrabold text-xl">Bonjour <span id="membreNomAffiche">Membre</span> 👋</h2><p class="text-sm text-gray-500">Groupe : <b id="membreGroupeAffiche">—</b> • <span id="membreMainsAffiche">—</span> • Ordre : <b id="membreOrdreAffiche" class="text-purple-700">—</b></p></div><button onclick="deconnecter()" class="bg-gray-100 px-4 py-2 rounded-full text-sm font-bold">Déconnexion</button></div>
+
 <div class="grid md:grid-cols-2 gap-4 mt-4">
-<div class="bg-white rounded-[20px] p-5 card">
-<h3 class="font-extrabold">💰 Payer ma tontine</h3>
-<p class="text-sm text-gray-500">Paie sur le numéro de la Maman, tape ton ID. La plateforme vérifie toute seule.</p>
-<div class="bg-[#FFF8E1] border border-yellow-200 rounded-xl p-3 mt-3 text-sm">Montant à payer : <b id="payMontantMembre">—</b><br>Maman : <b id="payMamanMembre">—</b> - <b id="payTelMamanMembre">—</b></div>
-<select id="payMethode" class="w-full border rounded-xl px-3 py-3 mt-3"><option>Orange Money</option><option>Moov Money</option><option>Telecel Money</option></select>
-<input id="payTx" placeholder="ID Transaction ex: MP... " class="w-full border rounded-xl px-3 py-3 mt-2 uppercase">
-<button onclick="payerMembre()" class="w-full bg-[#F2C94C] py-3.5 rounded-xl font-extrabold mt-3">✅ Vérifier & Payer</button>
+<div class="bg-white rounded-[20px] p-5 border">
+<h3 class="font-extrabold">💰 Étape 1 : Paie sur Orange Money</h3>
+<div class="bg-yellow-50 border border-yellow-200 rounded-xl p-3 mt-3 text-sm">Montant : <b id="payMontantMembre">—</b><br>Maman : <b id="payMamanMembre">—</b> - <b id="payTelMamanMembre">—</b><br>Compose : <b>*144*10*<span id="payCodeMaman">55441010</span>#</b></div>
+<h3 class="font-extrabold mt-4">📸 Étape 2 : Upload ta capture ici</h3>
+<p class="text-sm text-gray-500">Prends la capture d'écran de ton SMS Orange Money et mets-la ici. Sans capture = pas de validation.</p>
+<input id="payTx" placeholder="ID Transaction ex: MP..." class="w-full border rounded-xl px-3 py-3 mt-3 uppercase">
+<select id="payMethode" class="w-full border rounded-xl px-3 py-3 mt-2"><option>Orange Money</option><option>Moov Money</option><option>Telecel Money</option></select>
+<label class="block mt-3 border-2 border-dashed border-purple-300 rounded-xl p-4 text-center cursor-pointer bg-purple-50">
+<span class="text-3xl">📸</span><br><span class="font-bold text-sm">Clique pour choisir ta capture d'écran</span><br><span class="text-xs text-gray-500">JPG / PNG - La capture de ton paiement</span>
+<input id="payCapture" type="file" accept="image/*" class="hidden" onchange="previewCapture(this)">
+</label>
+<img id="previewImg" class="hidden w-full rounded-xl mt-3 border max-h-[300px] object-contain">
+<button onclick="envoyerPourVerification()" class="w-full bg-yellow-400 py-3.5 rounded-xl font-extrabold mt-3">📤 Envoyer capture à la Maman pour vérification</button>
 <div id="payResultMembre" class="hidden mt-3 p-3 rounded-xl text-sm"></div>
-<p class="text-[11px] text-gray-400 mt-2 text-center">🔒 L'algorithme vérifie : ID existe vraiment ? Montant correct ? ID déjà utilisé ? Si oui = validé automatiquement.</p>
 </div>
 <div class="space-y-4">
-<div class="bg-white rounded-[20px] p-5 card"><h3 class="font-bold">📜 Mon historique</h3><div id="histMembre" class="mt-2 space-y-2 text-sm"></div></div>
-<div class="bg-white rounded-[20px] p-5 card"><h3 class="font-bold">🎯 Mon ordre de prise - Algorithme Caviar</h3><div id="ordreMembre" class="mt-2 text-sm"></div></div>
+<div class="bg-white rounded-[20px] p-5 border"><h3 class="font-bold">📜 Mon historique - Statut en direct</h3><div id="histMembre" class="mt-2 space-y-2 text-sm"></div><p class="text-xs text-gray-400 mt-2">🟡 En attente = Maman en train de vérifier ta capture<br>✅ Dépôt reçu = Maman a confirmé, robot a coché<br>❌ Rejeté = Capture floue / faux ID / montant faux</p></div>
+<div class="bg-white rounded-[20px] p-5 border"><h3 class="font-bold">🎯 Mon ordre de prise</h3><div id="ordreMembre" class="mt-2 text-sm"></div></div>
 </div>
 </div>
 </section>
 
 <!-- ESPACE MAMAN -->
 <section id="page-maman" class="hidden max-w-6xl mx-auto px-4 py-6">
-<div class="bg-[#2A0A4A] text-white rounded-[20px] p-5 flex justify-between items-center flex-wrap gap-2"><div><h2 class="font-extrabold text-xl">👑 Tableau de bord Maman - <span id="mamanNomAffiche">Nassara</span></h2><p class="text-sm text-white/70">Tu contrôles tout : groupes, membres, paiements, ordre de prise.</p></div><button onclick="deconnecter()" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold">Déconnexion</button></div>
+<div class="bg-[#2A0A4A] text-white rounded-[20px] p-5 flex justify-between flex-wrap gap-2"><div><h2 class="font-extrabold text-xl">👑 Maman - <span id="mamanNomAffiche">Nassara</span> - Vérification des dépôts</h2><p class="text-sm text-white/70">Tu es la seule à pouvoir valider. Le robot ne coche que si tu dis oui.</p></div><button onclick="deconnecter()" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold">Déconnexion</button></div>
 
 <div class="grid grid-cols-3 gap-3 mt-4 text-center">
-<div class="bg-white rounded-[20px] p-4 card"><b id="statGroupes" class="text-2xl">0</b><br><span class="text-xs text-gray-500">Groupes</span></div>
-<div class="bg-white rounded-[20px] p-4 card"><b id="statMembres" class="text-2xl">0</b><br><span class="text-xs text-gray-500">Membres total</span></div>
-<div class="bg-white rounded-[20px] p-4 card"><b id="statPayes" class="text-2xl text-green-600">0</b><br><span class="text-xs text-gray-500">Payés aujourd'hui</span></div>
+<div class="bg-white rounded-[20px] p-4 border"><b id="statAttente" class="text-2xl text-orange-500">0</b><br><span class="text-xs text-gray-500">En attente</span></div>
+<div class="bg-white rounded-[20px] p-4 border"><b id="statValides" class="text-2xl text-green-600">0</b><br><span class="text-xs text-gray-500">Validés</span></div>
+<div class="bg-white rounded-[20px] p-4 border"><b id="statMembres" class="text-2xl">0</b><br><span class="text-xs text-gray-500">Membres</span></div>
 </div>
 
-<div class="bg-white rounded-[20px] p-5 card mt-4">
-<div class="flex justify-between items-center"><h3 class="font-extrabold text-lg">➕ Créer un groupe de tontine</h3><button onclick="toggleCreer()" class="bg-[#F2C94C] px-4 py-2 rounded-full text-sm font-bold">Afficher / Masquer</button></div>
-<div id="formCreer" class="grid md:grid-cols-2 gap-3 mt-3">
-<input id="gNom" placeholder="Nom du groupe ex: Tontine Caviar Espoir" class="border rounded-xl px-3 py-3">
-<input id="gMontant" type="number" placeholder="Montant par tour ex: 5500" class="border rounded-xl px-3 py-3">
-<select id="gFrequence" class="border rounded-xl px-3 py-3"><option value="Journalier">Journalier - chaque jour</option><option value="Hebdomadaire">Hebdomadaire - chaque semaine</option><option value="Mensuel">Mensuel - chaque mois</option><option value="Soir">Soir - chaque soir</option></select>
-<input id="gMax" type="number" placeholder="Nombre max de personnes ex: 10" class="border rounded-xl px-3 py-3">
-<input id="gDuree" type="number" placeholder="Durée : nombre de tours ex: 10" class="border rounded-xl px-3 py-3">
-<input id="gDebut" type="date" class="border rounded-xl px-3 py-3">
-<input id="gMamanTel" placeholder="Tél Maman ex: 55441010" class="border rounded-xl px-3 py-3" value="55441010">
-<input id="gMamanNom" placeholder="Nom Maman" class="border rounded-xl px-3 py-3" value="Nassara">
-<button onclick="creerGroupeMaman()" class="md:col-span-2 bg-[#2A0A4A] text-white py-3 rounded-xl font-bold">Créer le groupe + Envoyer notification WhatsApp à tous →</button>
-<div id="groupeCreeMsg" class="hidden md:col-span-2 p-3 rounded-xl text-sm bg-green-50"></div>
-</div>
+<!-- SIMULATION ROBOT WHATSAPP -->
+<div class="bg-white rounded-[20px] p-5 border mt-4">
+<h3 class="font-extrabold">🤖 Robot WhatsApp - Réponse de la Maman</h3>
+<p class="text-sm text-gray-500">Quand tu réponds sur WhatsApp <b>« oui dépôt reçu »</b> ou <b>« ok »</b>, le robot lit ta réponse et valide tout seul. Teste ici :</p>
+<div class="flex gap-2 mt-3"><input id="robotMsg" placeholder="Tape ici comme sur WhatsApp : oui dépôt reçu" class="flex-1 border rounded-xl px-3 py-3"><button onclick="robotWhatsApp()" class="bg-green-600 text-white px-5 py-3 rounded-xl font-bold">Envoyer au Robot 🤖</button></div>
+<p class="text-xs text-gray-400 mt-2">En production, on branche WhatsApp Business API. Ici, c'est la même logique : ta réponse WhatsApp = validation automatique.</p>
 </div>
 
-<div class="bg-white rounded-[20px] p-5 card mt-4">
-<h3 class="font-extrabold text-lg">📋 Mes groupes - Contrôle total</h3>
+<div class="bg-white rounded-[20px] p-5 border mt-4">
+<h3 class="font-extrabold text-lg">➕ Créer un groupe</h3>
+<div class="grid md:grid-cols-2 gap-3 mt-3"><input id="gNom" placeholder="Nom groupe ex: Caviar Espoir" class="border rounded-xl px-3 py-3"><input id="gMontant" type="number" placeholder="Montant ex: 5500" class="border rounded-xl px-3 py-3"><select id="gFrequence" class="border rounded-xl px-3 py-3"><option>Journalier</option><option>Hebdomadaire</option><option>Mensuel</option><option>Soir</option></select><input id="gMax" type="number" placeholder="Max personnes ex: 10" class="border rounded-xl px-3 py-3"><input id="gDuree" type="number" placeholder="Durée tours ex: 10" class="border rounded-xl px-3 py-3"><input id="gDebut" type="date" class="border rounded-xl px-3 py-3"><button onclick="creerGroupeMaman()" class="md:col-span-2 bg-[#2A0A4A] text-white py-3 rounded-xl font-bold">Créer groupe + Notifier WhatsApp →</button></div>
+</div>
+
+<div class="bg-white rounded-[20px] p-5 border mt-4">
+<h3 class="font-extrabold text-lg">📸 Dépôts à vérifier - Regarde la capture, vérifie sur ton Orange Money</h3>
+<div id="listeAttenteMaman" class="mt-3 space-y-4"></div>
+</div>
+
+<div class="bg-white rounded-[20px] p-5 border mt-4">
+<h3 class="font-extrabold text-lg">📋 Mes groupes + Ordre de prise</h3>
 <div id="listeGroupesMaman" class="mt-3 space-y-3"></div>
-</div>
-
-<div class="bg-white rounded-[20px] p-5 card mt-4">
-<h3 class="font-extrabold text-lg">👥 Tous les membres - Qui a payé ? Qui est en retard ?</h3>
-<div id="listeMembresMaman" class="mt-3 space-y-2 text-sm"></div>
 </div>
 </section>
 
-<footer class="text-center text-xs text-gray-400 py-6">© 2026 Tontine Caviar — Tontine Argent by Nassara — 55 44 10 10 / 65 47 19 96</footer>
+<footer class="text-center text-xs text-gray-400 py-6">© 2026 Tontine Caviar — 55 44 10 10 / 65 47 19 96</footer>
 
 <script>
-// ===== CLÉS TONTINE CAVIAR - DÉJÀ INTÉGRÉES =====
-const SUPABASE_URL = "https://bzobtkfhqvslgncxvvvp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_QpV1oaJYBpuJ-IR43YP_CQ_VWaNFrXP";
-let supabaseClient=null; try{ supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);}catch(e){}
-
-let GROUPES = JSON.parse(localStorage.getItem('caviar_groupes_v2')||'[]');
-let MEMBRES = JSON.parse(localStorage.getItem('caviar_membres_v2')||'[]');
-let PAIEMENTS = JSON.parse(localStorage.getItem('caviar_paiements_v2')||'[]');
-let TX_VERIF = JSON.parse(localStorage.getItem('caviar_tx_v2')||'[]');
-let session = JSON.parse(localStorage.getItem('caviar_session_v2')||'null');
-
-if(GROUPES.length===0){
- GROUPES=[
-  {id:'JOUR-800', nom:'Tontine Caviar Jour - 800F', montant:800, frequence:'Journalier', max:20, duree:20, debut:'2026-11-25', maman_tel:'55441010', maman_nom:'Nassara', code:'JOUR-800'},
-  {id:'SOIR-2750', nom:'Tontine Caviar Soir - 2.750F', montant:2750, frequence:'Soir', max:15, duree:15, debut:'2026-11-25', maman_tel:'55441010', maman_nom:'Nassara', code:'SOIR-2750'},
-  {id:'SEMAINE-5500', nom:'Tontine Caviar Semaine - 5.500F', montant:5500, frequence:'Hebdomadaire', max:12, duree:12, debut:'2026-11-28', maman_tel:'55441010', maman_nom:'Nassara', code:'SEMAINE-5500'},
-  {id:'MOIS-11000', nom:'Tontine Caviar Mois - 11.000F', montant:11000, frequence:'Mensuel', max:10, duree:10, debut:'2026-12-01', maman_tel:'65471996', maman_nom:'Nassara', code:'MOIS-11000'},
- ];
- localStorage.setItem('caviar_groupes_v2', JSON.stringify(GROUPES));
-}
-function save(){ localStorage.setItem('caviar_groupes_v2', JSON.stringify(GROUPES)); localStorage.setItem('caviar_membres_v2', JSON.stringify(MEMBRES)); localStorage.setItem('caviar_paiements_v2', JSON.stringify(PAIEMENTS)); localStorage.setItem('caviar_tx_v2', JSON.stringify(TX_VERIF)); }
-function showPage(n){ ['choix','login-membre','login-maman','membre','maman'].forEach(p=>{ let el=document.getElementById('page-'+p); if(el) el.classList.add('hidden'); }); document.getElementById('page-'+n).classList.remove('hidden'); window.scrollTo(0,0); if(n==='login-membre') remplirSelectGroupes(); if(n==='maman') renderMaman(); if(n==='membre') renderMembre(); }
-function choisirRole(r){ if(r==='membre') showPage('login-membre'); else showPage('login-maman'); }
-function remplirSelectGroupes(){ let s=document.getElementById('mGroupe'); s.innerHTML=''; GROUPES.forEach(g=>{ let o=document.createElement('option'); o.value=g.id; o.textContent=g.nom+' — '+g.montant+'F — '+g.frequence+' — Reste '+(g.max - MEMBRES.filter(m=>m.groupe_id===g.id).length)+' places'; s.appendChild(o); }); }
-function loginMembre(){
- let tel=document.getElementById('mTel').value.trim(); let nom=document.getElementById('mNom').value.trim(); let mains=parseInt(document.getElementById('mMains').value)||1; let gid=document.getElementById('mGroupe').value;
- if(!tel||!nom) return alert('Mets ton téléphone et ton nom');
- let g=GROUPES.find(x=>x.id===gid); let deja=MEMBRES.filter(m=>m.groupe_id===gid).length;
- if(deja>=g.max) return alert('Groupe complet ! Choisis un autre groupe. Places : '+g.max);
- let m={tel, nom, mains, groupe_id:gid, groupe_nom:g.nom, date_inscription:new Date().toLocaleDateString('fr-FR')};
- let exist=MEMBRES.find(x=>x.tel===tel && x.groupe_id===gid); if(!exist) MEMBRES.push(m);
- session={role:'membre', tel, nom, mains, groupe_id:gid}; localStorage.setItem('caviar_session_v2', JSON.stringify(session)); save();
- if(supabaseClient) supabaseClient.from('membres').insert([{prenom:nom, nom:'', tel, mot_de_passe:'1234'}]).then(()=>{});
- alert('Bienvenue '+nom+' ! Tu as '+mains+' main(s). Ton ordre de prise est calculé automatiquement.');
- showPage('membre');
-}
-function loginMaman(){
- let tel=document.getElementById('mamTel').value.trim(); let code=document.getElementById('mamCode').value.trim();
- if((tel==='55441010'||tel==='65471996') && code==='5544'){ session={role:'maman', tel, nom:'Nassara'}; localStorage.setItem('caviar_session_v2', JSON.stringify(session)); showPage('maman'); }
- else alert('Code Maman incorrect. Demande à Nassara. Téléphone Maman : 55441010 / 65471996, Code : 5544');
-}
-function deconnecter(){ session=null; localStorage.removeItem('caviar_session_v2'); showPage('choix'); }
-// ===== ALGORITHME ORDRE DE PRISE =====
-// 3 mains = 1er + milieu + dernier | 2 mains = 1er + dernier | 1 main = milieu centralisé
-function calculerOrdre(groupe_id){
- let membres=MEMBRES.filter(m=>m.groupe_id===groupe_id);
- let trois=membres.filter(m=>m.mains===3);
- let deux=membres.filter(m=>m.mains===2);
- let un=membres.filter(m=>m.mains===1);
- let ordre=[];
- // 1ère position : les 3 mains d'abord, puis 2 mains
- trois.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'1ère prise (Début)'}));
- deux.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'1ère prise (Début)'}));
- // Milieu : les 1 main centralisés + les 3 mains (2ème prise)
- un.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'Milieu - Centralisé'}));
- trois.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'Milieu - 2ème prise (3 mains)'}));
- // Dernière : 2 mains + 3 mains
- deux.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'Dernière prise (Fin)'}));
- trois.forEach(m=>ordre.push({nom:m.nom, mains:m.mains, tour:'Dernière prise - 3ème prise (3 mains)'}));
- return ordre;
-}
-function renderMembre(){
- if(!session||session.role!=='membre') return showPage('choix');
- let g=GROUPES.find(x=>x.id===session.groupe_id); if(!g) return;
- document.getElementById('membreNomAffiche').textContent=session.nom;
- document.getElementById('membreGroupeAffiche').textContent=g.nom;
- document.getElementById('membreMainsAffiche').textContent=session.mains+' main(s)';
- document.getElementById('payMontantMembre').textContent=g.montant+'F ('+g.frequence+')';
- document.getElementById('payMamanMembre').textContent=g.maman_nom;
- document.getElementById('payTelMamanMembre').textContent=g.maman_tel;
- let ordre=calculerOrdre(g.id); let idx=ordre.findIndex(o=>o.nom===session.nom);
- document.getElementById('membreOrdreAffiche').textContent= idx>=0 ? (idx+1)+'ème - '+ordre[idx].tour : 'En attente de calcul';
- document.getElementById('ordreMembre').innerHTML=ordre.map((o,i)=>`<div class="border rounded-xl p-2 flex justify-between ${o.nom===session.nom?'bg-purple-50 border-purple-300':''}"><span><b>${i+1}.</b> ${o.nom} ${o.nom===session.nom?'(Toi)':''}</span><span>${o.mains} main(s) - ${o.tour}</span></div>`).join('')||'Aucun membre pour l’instant.';
- let mesPaiements=PAIEMENTS.filter(p=>p.tel===session.tel && p.groupe_id===g.id);
- document.getElementById('histMembre').innerHTML=mesPaiements.slice(-10).reverse().map(p=>`<div class="border rounded-xl p-2 flex justify-between"><span>${p.date} - ID ${p.tx}</span><b>${p.montant}F - ${p.statut}</b></div>`).join('')||'<p class="text-gray-400">Aucun paiement pour l’instant.</p>';
-}
-async function payerMembre(){
+const SUPABASE_URL="https://bzobtkfhqvslgncxvvvp.supabase.co"; const SUPABASE_KEY="sb_publishable_QpV1oaJYBpuJ-IR43YP_CQ_VWaNFrXP";
+let supabaseClient=null; try{supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);}catch(e){}
+let GROUPES=JSON.parse(localStorage.getItem('caviar_groupes_v3')||'[]');
+let MEMBRES=JSON.parse(localStorage.getItem('caviar_membres_v3')||'[]');
+let PAIEMENTS=JSON.parse(localStorage.getItem('caviar_paiements_v3')||'[]');
+let session=JSON.parse(localStorage.getItem('caviar_session_v3')||'null');
+let captureData='';
+if(GROUPES.length===0){ GROUPES=[{id:'JOUR-800',nom:'Tontine Caviar Jour - 800F',montant:800,frequence:'Journalier',max:20,duree:20,debut:'2026-11-25',maman_tel:'55441010',maman_nom:'Nassara',code:'JOUR-800'},{id:'SOIR-2750',nom:'Tontine Caviar Soir - 2.750F',montant:2750,frequence:'Soir',max:15,duree:15,debut:'2026-11-25',maman_tel:'55441010',maman_nom:'Nassara',code:'SOIR-2750'},{id:'SEMAINE-5500',nom:'Tontine Caviar Semaine - 5.500F',montant:5500,frequence:'Hebdomadaire',max:12,duree:12,debut:'2026-11-28',maman_tel:'55441010',maman_nom:'Nassara',code:'SEMAINE-5500'},{id:'MOIS-11000',nom:'Tontine Caviar Mois - 11.000F',montant:11000,frequence:'Mensuel',max:10,duree:10,debut:'2026-12-01',maman_tel:'65471996',maman_nom:'Nassara',code:'MOIS-11000'}]; localStorage.setItem('caviar_groupes_v3',JSON.stringify(GROUPES)); }
+function save(){ localStorage.setItem('caviar_groupes_v3',JSON.stringify(GROUPES)); localStorage.setItem('caviar_membres_v3',JSON.stringify(MEMBRES)); localStorage.setItem('caviar_paiements_v3',JSON.stringify(PAIEMENTS)); }
+function showPage(n){ ['choix','login-membre','login-maman','membre','maman'].forEach(p=>{let el=document.getElementById('page-'+p); if(el) el.classList.add('hidden');}); document.getElementById('page-'+n).classList.remove('hidden'); window.scrollTo(0,0); if(n==='login-membre') remplirSelectGroupes(); if(n==='maman') renderMaman(); if(n==='membre') renderMembre(); }
+function choisirRole(r){ showPage(r==='membre'?'login-membre':'login-maman'); }
+function remplirSelectGroupes(){ let s=document.getElementById('mGroupe'); s.innerHTML=''; GROUPES.forEach(g=>{ let o=document.createElement('option'); o.value=g.id; o.textContent=g.nom+' — '+g.montant+'F — Reste '+(g.max-MEMBRES.filter(m=>m.groupe_id===g.id).length)+' places'; s.appendChild(o); }); }
+function loginMembre(){ let tel=document.getElementById('mTel').value.trim(); let nom=document.getElementById('mNom').value.trim(); let mains=parseInt(document.getElementById('mMains').value)||1; let gid=document.getElementById('mGroupe').value; if(!tel||!nom) return alert('Mets téléphone et nom'); let g=GROUPES.find(x=>x.id===gid); if(MEMBRES.filter(m=>m.groupe_id===gid).length>=g.max) return alert('Groupe complet'); if(!MEMBRES.find(x=>x.tel===tel && x.groupe_id===gid)) MEMBRES.push({tel,nom,mains,groupe_id:gid,groupe_nom:g.nom}); session={role:'membre',tel,nom,mains,groupe_id:gid}; localStorage.setItem('caviar_session_v3',JSON.stringify(session)); save(); alert('Bienvenue '+nom+' !'); showPage('membre'); }
+function loginMaman(){ let tel=document.getElementById('mamTel').value.trim(); let code=document.getElementById('mamCode').value.trim(); if((tel==='55441010'||tel==='65471996')&&code==='5544'){ session={role:'maman',tel,nom:'Nassara'}; localStorage.setItem('caviar_session_v3',JSON.stringify(session)); showPage('maman'); } else alert('Code Maman incorrect. Téléphone 55441010 / 65471996 - Code 5544'); }
+function deconnecter(){ session=null; localStorage.removeItem('caviar_session_v3'); showPage('choix'); }
+function calculerOrdre(gid){ let ms=MEMBRES.filter(m=>m.groupe_id===gid); let trois=ms.filter(m=>m.mains===3); let deux=ms.filter(m=>m.mains===2); let un=ms.filter(m=>m.mains===1); let o=[]; trois.forEach(m=>o.push({nom:m.nom,mains:3,tour:'1ère prise'})); deux.forEach(m=>o.push({nom:m.nom,mains:2,tour:'1ère prise'})); un.forEach(m=>o.push({nom:m.nom,mains:1,tour:'Milieu - Centralisé'})); trois.forEach(m=>o.push({nom:m.nom,mains:3,tour:'Milieu - 2ème prise'})); deux.forEach(m=>o.push({nom:m.nom,mains:2,tour:'Dernière prise'})); trois.forEach(m=>o.push({nom:m.nom,mains:3,tour:'Dernière - 3ème prise'})); return o; }
+function renderMembre(){ if(!session||session.role!=='membre') return; let g=GROUPES.find(x=>x.id===session.groupe_id); if(!g) return; document.getElementById('membreNomAffiche').textContent=session.nom; document.getElementById('membreGroupeAffiche').textContent=g.nom; document.getElementById('membreMainsAffiche').textContent=session.mains+' main(s)'; document.getElementById('payMontantMembre').textContent=g.montant+'F ('+g.frequence+')'; document.getElementById('payMamanMembre').textContent=g.maman_nom; document.getElementById('payTelMamanMembre').textContent=g.maman_tel; document.getElementById('payCodeMaman').textContent=g.maman_tel; let ordre=calculerOrdre(g.id); let idx=ordre.findIndex(o=>o.nom===session.nom); document.getElementById('membreOrdreAffiche').textContent=idx>=0?(idx+1)+'ème - '+ordre[idx].tour:'En attente'; document.getElementById('ordreMembre').innerHTML=ordre.map((o,i)=>`<div class="border rounded-xl p-2 flex justify-between ${o.nom===session.nom?'bg-purple-50':''}"><span><b>${i+1}.</b> ${o.nom}</span><span>${o.mains} main(s) - ${o.tour}</span></div>`).join('')||'Aucun membre'; let mes=PAIEMENTS.filter(p=>p.tel===session.tel && p.groupe_id===g.id); document.getElementById('histMembre').innerHTML=mes.slice(-10).reverse().map(p=>`<div class="border rounded-xl p-2"><div class="flex justify-between"><span>${p.date} - ID ${p.tx}</span><b>${p.montant}F</b></div><div class="mt-1"><span class="px-2 py-1 rounded-full text-xs ${p.statut.includes('reçu')?'bg-green-100 text-green-700':p.statut.includes('Rejeté')?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-800'}">${p.statut}</span></div>${p.capture?`<img src="${p.capture}" class="w-full rounded-xl mt-2 max-h-[200px] object-contain border">`:''}</div>`).join('')||'<p class="text-gray-400">Aucun paiement.</p>'; }
+function previewCapture(input){ if(input.files && input.files[0]){ let r=new FileReader(); r.onload=e=>{ captureData=e.target.result; let img=document.getElementById('previewImg'); img.src=captureData; img.classList.remove('hidden'); }; r.readAsDataURL(input.files[0]); } }
+// ===== NOUVELLE VÉRIFICATION V3 : CAPTURE OBLIGATOIRE, PAS DE FAUX ID =====
+async function envoyerPourVerification(){
  let tx=document.getElementById('payTx').value.trim().toUpperCase(); let g=GROUPES.find(x=>x.id===session.groupe_id);
  if(!tx) return alert('Tape ton ID de transaction');
- let box=document.getElementById('payResultMembre'); box.classList.remove('hidden');
- // ===== ALGORITHME DE VÉRIFICATION AUTOMATIQUE =====
- if(TX_VERIF.find(t=>t.tx===tx)){ box.className='mt-3 p-3 rounded-xl text-sm bg-red-50 text-red-700'; box.innerHTML='❌ Cet ID a déjà été utilisé. Impossible de réutiliser.'; return; }
- if(tx.length<8){ box.className='mt-3 p-3 rounded-xl text-sm bg-red-50 text-red-700'; box.innerHTML='❌ ID trop court. Vérifie ton SMS Orange / Moov.'; return; }
- // Ici on simule la vérification réelle CinetPay / Orange API. En production, CinetPay vérifie que l'argent est bien arrivé sur le compte de la Maman.
- // Pour la V2, on valide si le format est bon et on enregistre.
- box.className='mt-3 p-3 rounded-xl text-sm bg-yellow-50'; box.innerHTML='🔍 Vérification en cours... L’algorithme vérifie si l’ID existe vraiment sur le compte de la Maman...';
- await new Promise(r=>setTimeout(r,1200));
- let p={tel:session.tel, nom:session.nom, groupe_id:g.id, groupe_nom:g.nom, montant:g.montant, methode:document.getElementById('payMethode').value, tx, statut:'✅ Validé automatiquement', date:new Date().toLocaleDateString('fr-FR')};
- PAIEMENTS.push(p); TX_VERIF.push({tx, tel:session.tel, groupe_id:g.id, montant:g.montant}); save();
- if(supabaseClient){ try{ await supabaseClient.from('paiements_tontine').insert([{tel_membre:session.tel, nom_membre:session.nom, code_groupe:g.code, montant:g.montant, methode:p.methode, transaction_id:tx, statut:p.statut, date_paiement:new Date().toISOString().slice(0,10)}]); await supabaseClient.from('transactions_verifiees').insert([{transaction_id:tx, tel_membre:session.tel, code_groupe:g.code, montant:g.montant}]); }catch(e){} }
- box.className='mt-3 p-3 rounded-xl text-sm bg-green-50 text-green-700'; box.innerHTML=`✅ <b>PAIEMENT VALIDÉ AUTOMATIQUEMENT !</b><br>ID ${tx} existe, ${g.montant}F reçus sur le compte de la Maman ${g.maman_nom}. La Maman a été notifiée par WhatsApp.`;
- // WhatsApp auto à la Maman
- let msg=`👑 TONTINE CAVIAR - PAIEMENT VALIDÉ\nMembre: ${session.nom} (${session.tel})\nGroupe: ${g.nom}\nMontant: ${g.montant}F\nID: ${tx}\nStatut: Validé automatiquement`;
- window.open(`https://wa.me/226${g.maman_tel}?text=${encodeURIComponent(msg)}`, '_blank');
+ if(!captureData) return alert('❌ Mets ta capture d’écran d’abord ! Sans capture, on ne peut pas vérifier.');
+ if(PAIEMENTS.find(p=>p.tx===tx && p.statut!=='❌ Rejeté')) return alert('❌ Cet ID a déjà été envoyé. Attends la validation de la Maman.');
+ let p={id:Date.now(), tel:session.tel, nom:session.nom, groupe_id:g.id, groupe_nom:g.nom, montant:g.montant, methode:document.getElementById('payMethode').value, tx, capture:captureData, statut:'🟡 En attente - Maman en train de vérifier', date:new Date().toLocaleDateString('fr-FR')+' '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})};
+ PAIEMENTS.push(p); save();
+ if(supabaseClient){ try{ await supabaseClient.from('paiements_tontine').insert([{tel_membre:session.tel, nom_membre:session.nom, code_groupe:g.code, montant:g.montant, methode:p.methode, transaction_id:tx, statut:p.statut, capture_url:'capture_uploadee', date_paiement:new Date().toISOString().slice(0,10)}]); }catch(e){} }
+ let box=document.getElementById('payResultMembre'); box.classList.remove('hidden'); box.className='mt-3 p-3 rounded-xl text-sm bg-yellow-50 text-yellow-800'; box.innerHTML=`✅ <b>Capture envoyée à la Maman !</b><br>Statut : <b>🟡 En attente</b><br>La plateforme a envoyé automatiquement un WhatsApp à la Maman pour qu’elle vérifie ta capture. Dès qu’elle dit « dépôt reçu », le robot va cocher ✅ tout seul.`;
+ // === PLATEFORME ENVOIE AUTOMATIQUEMENT À LA MAMAN VIA WHATSAPP ===
+ let msg=`👑 TONTINE CAVIAR - NOUVEAU DÉPÔT À VÉRIFIER\nMembre: ${session.nom} (${session.tel})\nGroupe: ${g.nom}\nMontant: ${g.montant}F\nID: ${tx}\nMéthode: ${p.methode}\n\n📸 Il a uploadé sa capture sur la plateforme.\n👉 Va sur https://tontine-caviar.vercel.app, connecte-toi en Maman, vérifie la capture et clique « Dépôt reçu ».\nOu réponds ici « oui dépôt reçu » et le robot va valider tout seul.`;
+ window.open(`https://wa.me/226${g.maman_tel}?text=${encodeURIComponent(msg)}`,'_blank');
+ captureData=''; document.getElementById('previewImg').classList.add('hidden'); document.getElementById('payCapture').value=''; document.getElementById('payTx').value='';
  renderMembre();
 }
-function toggleCreer(){ let f=document.getElementById('formCreer'); f.style.display=f.style.display==='none'?'grid':'none'; }
-function creerGroupeMaman(){
- let nom=document.getElementById('gNom').value.trim(); let montant=parseInt(document.getElementById('gMontant').value); let freq=document.getElementById('gFrequence').value; let max=parseInt(document.getElementById('gMax').value); let duree=parseInt(document.getElementById('gDuree').value); let debut=document.getElementById('gDebut').value; let mtel=document.getElementById('gMamanTel').value.trim(); let mnom=document.getElementById('gMamanNom').value.trim();
- if(!nom||!montant||!max||!debut) return alert('Remplis nom, montant, nombre max et date de début');
- let code=nom.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)+'-'+montant;
- let g={id:code, nom, montant, frequence:freq, max, duree:duree||max, debut, maman_tel:mtel, maman_nom:mnom||'Nassara', code};
- GROUPES.push(g); save();
- if(supabaseClient) supabaseClient.from('tontines').insert([{code_groupe:code, nom_groupe:nom, montant, maman_tel:mtel, maman_nom:mnom}]).then(()=>{});
- let msgBox=document.getElementById('groupeCreeMsg'); msgBox.classList.remove('hidden'); msgBox.innerHTML=`✅ Groupe créé ! <b>Code : ${code}</b><br>Début : ${debut} - ${freq} - ${montant}F - Max ${max} personnes - Durée ${duree||max} tours.<br>Notification WhatsApp prête à envoyer à tous les inscrits.`;
- // Notification WhatsApp auto - la Maman clique pour envoyer à tous
- let msg=`👑 TONTINE CAVIAR - NOUVEAU GROUPE\nGroupe: ${nom}\nMontant: ${montant}F - ${freq}\nDébut: ${debut}\nDurée: ${duree||max} tours - Max ${max} personnes\nCode: ${code}\nInscris-toi sur https://tontine-caviar.vercel.app`;
- window.open(`https://wa.me/226${mtel}?text=${encodeURIComponent(msg)}`, '_blank');
+function renderMaman(){
+ document.getElementById('statAttente').textContent=PAIEMENTS.filter(p=>p.statut.includes('En attente')).length;
+ document.getElementById('statValides').textContent=PAIEMENTS.filter(p=>p.statut.includes('reçu')).length;
+ document.getElementById('statMembres').textContent=MEMBRES.length;
+ let att=PAIEMENTS.filter(p=>p.statut.includes('En attente'));
+ document.getElementById('listeAttenteMaman').innerHTML=att.map(p=>`<div class="border-2 border-orange-200 rounded-[16px] p-4 bg-orange-50/50"><div class="flex justify-between flex-wrap gap-2"><div><b>${p.nom}</b> - ${p.tel}<br><span class="text-sm">${p.groupe_nom} - ${p.montant}F - ID ${p.tx} - ${p.methode}<br>${p.date}</span></div><span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold h-fit">🟡 En attente</span></div><p class="text-sm mt-2 font-bold">📸 Capture du membre - Vérifie si le montant est bien arrivé sur ton Orange Money :</p><img src="${p.capture}" class="w-full rounded-xl border max-h-[350px] object-contain bg-white mt-2"><div class="flex gap-2 mt-3 flex-wrap"><button onclick="validerDepot(${p.id},'maman')" class="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold">✅ Dépôt reçu - Valider</button><button onclick="rejeterDepot(${p.id})" class="flex-1 bg-red-100 text-red-700 py-3 rounded-xl font-bold">❌ Rejeter - Faux / Montant faux</button></div></div>`).join('')||'<p class="text-gray-400">Aucun dépôt en attente. Tous les dépôts sont vérifiés ✅</p>';
+ document.getElementById('listeGroupesMaman').innerHTML=GROUPES.map(g=>{ let ms=MEMBRES.filter(m=>m.groupe_id===g.id); let ordre=calculerOrdre(g.id); return `<div class="border rounded-xl p-4"><div class="flex justify-between flex-wrap"><b>${g.nom}</b><span>${g.montant}F - ${g.frequence} - ${ms.length}/${g.max} - Début ${g.debut}</span></div><div class="mt-2 text-sm"><b>Ordre de prise :</b> ${ordre.map((o,i)=>`${i+1}. ${o.nom} (${o.mains} mains - ${o.tour})`).join(' | ')||'Aucun membre'}</div><div class="mt-2">${ms.map(m=>`<div class="flex justify-between border rounded-lg p-2 mt-1 text-sm"><span>${m.nom} - ${m.tel} - ${m.mains} main(s)</span><span class="flex gap-1"><button onclick="prioriserMembre('${m.tel}','${g.id}')" class="bg-purple-100 px-2 py-1 rounded-full text-xs">⭐ Prioriser</button><button onclick="supprimerMembre('${m.tel}','${g.id}')" class="bg-red-100 px-2 py-1 rounded-full text-xs">Supprimer</button></span></div>`).join('')||'Aucun membre'}</div></div>`}).join('');
+}
+// ===== ROBOT WHATSAPP : LA MAMAN RÉPOND « oui dépôt reçu » → VALIDATION AUTO =====
+function robotWhatsApp(){
+ let msg=document.getElementById('robotMsg').value.toLowerCase().trim();
+ if(!msg) return alert('Tape ta réponse WhatsApp, ex: oui dépôt reçu');
+ let ok = msg.includes('oui') || msg.includes('ok') || msg.includes('reçu') || msg.includes('recu') || msg.includes('confirm');
+ if(!ok) return alert('Le robot n’a pas compris. Dis « oui dépôt reçu » ou « ok » pour valider.');
+ // Le robot valide le plus ancien dépôt en attente
+ let att=PAIEMENTS.filter(p=>p.statut.includes('En attente'));
+ if(att.length===0) return alert('Aucun dépôt en attente à valider.');
+ let p=att[0];
+ validerDepot(p.id,'robot');
+}
+function validerDepot(id, source){
+ let p=PAIEMENTS.find(x=>x.id===id); if(!p) return;
+ p.statut='✅ Dépôt reçu - Validé par Maman';
+ save();
+ if(supabaseClient){ try{ supabaseClient.from('paiements_tontine').update({statut:p.statut}).eq('transaction_id',p.tx).then(()=>{}); }catch(e){} }
+ // Robot envoie WhatsApp au membre
+ let msg=`✅ TONTINE CAVIAR - DÉPÔT CONFIRMÉ\nBonjour ${p.nom} !\nTon dépôt de ${p.montant}F pour ${p.groupe_nom} est confirmé.\nID: ${p.tx}\nStatut: ✅ Dépôt reçu\nMerci, tu es à jour !`;
+ window.open(`https://wa.me/226${p.tel}?text=${encodeURIComponent(msg)}`,'_blank');
+ alert(source==='robot' ? `🤖 Robot : Message WhatsApp « oui dépôt reçu » compris ! Dépôt de ${p.nom} validé automatiquement ✅` : `✅ Dépôt de ${p.nom} validé ! Le membre a été notifié par WhatsApp.`);
  renderMaman();
 }
-function renderMaman(){
- document.getElementById('mamanNomAffiche').textContent=session?.nom||'Nassara';
- document.getElementById('statGroupes').textContent=GROUPES.length;
- document.getElementById('statMembres').textContent=MEMBRES.length;
- let today=new Date().toLocaleDateString('fr-FR');
- document.getElementById('statPayes').textContent=PAIEMENTS.filter(p=>p.date===today).length;
- document.getElementById('listeGroupesMaman').innerHTML=GROUPES.map(g=>{
-   let membres=MEMBRES.filter(m=>m.groupe_id===g.id);
-   let payes=PAIEMENTS.filter(p=>p.groupe_id===g.id);
-   let ordre=calculerOrdre(g.id);
-   return `<div class="border rounded-xl p-4">
-   <div class="flex justify-between flex-wrap gap-2"><div><b>${g.nom}</b> - ${g.montant}F - ${g.frequence}<br><span class="text-xs text-gray-500">Code: ${g.code} | Début: ${g.debut} | Durée: ${g.duree} tours | ${membres.length}/${g.max} personnes | ${payes.length} paiements</span></div>
-   <div class="flex gap-2"><button onclick="notifierDebut('${g.id}')" class="bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-bold">📲 Notifier début WhatsApp</button><button onclick="supprimerGroupe('${g.id}')" class="bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-xs font-bold">Supprimer</button></div></div>
-   <div class="mt-3"><b class="text-sm">Ordre de prise - Algorithme :</b><div class="mt-1 space-y-1 text-sm">${ordre.map((o,i)=>`<div class="bg-gray-50 rounded-lg p-2 flex justify-between"><span>${i+1}. ${o.nom}</span><span>${o.mains} main(s) - ${o.tour}</span></div>`).join('')||'<span class="text-gray-400">Aucun membre</span>'}</div></div>
-   <div class="mt-3"><b class="text-sm">Membres :</b>${membres.map(m=>{ let aPaye=payes.find(p=>p.tel===m.tel); return `<div class="flex justify-between items-center border rounded-lg p-2 mt-1"><span>${m.nom} - ${m.tel} - ${m.mains} main(s) - <span class="${aPaye?'text-green-600 font-bold':'text-red-600 font-bold'}">${aPaye?'✅ Payé':'❌ Pas encore payé'}</span></span><span class="flex gap-1"><button onclick="prioriserMembre('${m.tel}','${g.id}')" class="bg-purple-100 px-2 py-1 rounded-full text-xs">⭐ Prioriser</button><button onclick="supprimerMembre('${m.tel}','${g.id}')" class="bg-red-100 px-2 py-1 rounded-full text-xs">Supprimer</button></span></div>`}).join('')||'<p class="text-gray-400 text-sm">Aucun membre</p>'}</div>
-   </div>`;
- }).join('')||'<p class="text-gray-400">Aucun groupe.</p>';
- document.getElementById('listeMembresMaman').innerHTML=MEMBRES.map(m=>{ let g=GROUPES.find(x=>x.id===m.groupe_id); let p=PAIEMENTS.filter(x=>x.tel===m.tel && x.groupe_id===m.groupe_id); return `<div class="border rounded-xl p-3 flex justify-between items-center"><div><b>${m.nom}</b> - ${m.tel}<br><span class="text-xs">${g?.nom||''} - ${m.mains} main(s) - ${p.length} paiement(s)</span></div><div class="flex gap-1"><button onclick="prioriserMembre('${m.tel}','${m.groupe_id}')" class="bg-purple-100 px-3 py-1 rounded-full text-xs font-bold">⭐ Prioriser</button><button onclick="supprimerMembre('${m.tel}','${m.groupe_id}')" class="bg-red-100 px-3 py-1 rounded-full text-xs font-bold">Supprimer</button></div></div>`}).join('')||'<p class="text-gray-400">Aucun membre inscrit.</p>';
-}
-function notifierDebut(gid){
- let g=GROUPES.find(x=>x.id===gid); let membres=MEMBRES.filter(m=>m.groupe_id===gid);
- if(membres.length===0) return alert('Aucun membre dans ce groupe pour notifier.');
- let msg=`👑 TONTINE CAVIAR\nBonjour ! Ta tontine *${g.nom}* commence le *${g.debut}*.\nMontant: ${g.montant}F - ${g.frequence}\nDurée: ${g.duree} tours\nPrépare ton paiement sur ${g.maman_tel} (${g.maman_nom}).\nLien: https://tontine-caviar.vercel.app`;
- // En production, on envoie à chaque membre via WhatsApp API. Ici on ouvre WhatsApp pour la Maman qui relaie.
- window.open(`https://wa.me/226${g.maman_tel}?text=${encodeURIComponent(msg + '\n\nMembres: ' + membres.map(m=>m.nom).join(', '))}`, '_blank');
- alert('Notification WhatsApp prête ! '+membres.length+' membres seront informés du début le '+g.debut);
-}
-function supprimerGroupe(id){ if(!confirm('Supprimer ce groupe ?')) return; GROUPES=GROUPES.filter(g=>g.id!==id); MEMBRES=MEMBRES.filter(m=>m.groupe_id!==id); save(); renderMaman(); }
+function rejeterDepot(id){ let raison=prompt('Pourquoi tu rejettes ? Ex: Montant faux / Faux ID / Capture floue'); let p=PAIEMENTS.find(x=>x.id===id); if(!p) return; p.statut='❌ Rejeté - '+(raison||'Vérification échouée'); save(); alert('Dépôt rejeté. Le membre doit renvoyer une vraie capture.'); renderMaman(); }
+function creerGroupeMaman(){ let nom=document.getElementById('gNom').value.trim(); let montant=parseInt(document.getElementById('gMontant').value); let freq=document.getElementById('gFrequence').value; let max=parseInt(document.getElementById('gMax').value); let duree=parseInt(document.getElementById('gDuree').value); let debut=document.getElementById('gDebut').value; if(!nom||!montant||!max||!debut) return alert('Remplis nom, montant, max, début'); let code=nom.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)+'-'+montant; GROUPES.push({id:code,nom,montant,frequence:freq,max,duree:duree||max,debut,maman_tel:'55441010',maman_nom:'Nassara',code}); save(); alert('Groupe créé ! Code : '+code); renderMaman(); }
 function supprimerMembre(tel,gid){ if(!confirm('Supprimer ce membre ?')) return; MEMBRES=MEMBRES.filter(m=>!(m.tel===tel && m.groupe_id===gid)); save(); renderMaman(); }
-function prioriserMembre(tel,gid){ let m=MEMBRES.find(x=>x.tel===tel && x.groupe_id===gid); if(!m) return; if(m.mains<3) m.mains++; else alert('Déjà 3 mains max'); save(); renderMaman(); alert(m.nom+' est maintenant à '+m.mains+' main(s) - Son ordre de prise a été recalculé automatiquement.'); }
-if(session){ if(session.role==='maman') showPage('maman'); else if(session.role==='membre') showPage('membre'); else showPage('choix'); } else showPage('choix');
+function prioriserMembre(tel,gid){ let m=MEMBRES.find(x=>x.tel===tel && x.groupe_id===gid); if(!m) return; if(m.mains<3) m.mains++; save(); renderMaman(); alert(m.nom+' passe à '+m.mains+' main(s) - Ordre recalculé'); }
+if(session){ if(session.role==='maman') showPage('maman'); else if(session.role==='membre') showPage('membre'); } else showPage('choix');
 </script>
 </body>
 </html>
