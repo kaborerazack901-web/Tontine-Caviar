@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daishi Tontine - Tontine Argent by Nassara</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{font-family:'Plus Jakarta Sans',sans-serif}
+.hero{background:linear-gradient(135deg,#2A0A4A 0%,#4B0E7A 55%,#6D1BA8 100%)}
+.gold{color:#F2C94C}
+.card{box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid #EEF2EF}
+.verif-ok{background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46}
+.verif-ko{background:#FEF2F2;border:1px solid #FECACA;color:#991B1B}
+.verif-wait{background:#FFFBEB;border:1px solid #FDE68A;color:#92400E}
+.tab-active{background:#2A0A4A;color:white!important}
+input,select{outline:none}
+input:focus{border-color:#6D1BA8!important;box-shadow:0 0 0 3px #E9D5FF}
+</style>
+</head>
+<body class="bg-[#F7F8F7] text-[#111827]">
+
+<!-- ===== HEADER AVEC LOGO INTÉGRÉ ===== -->
+<header class="hero text-white sticky top-0 z-50">
+<div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img src="logo.png" alt="Daishi Tontine - Tontine Argent by Nassara" class="w-12 h-12 rounded-full object-cover border-2 border-[#F2C94C] shadow-lg bg-white">
+<div>
+<p class="font-extrabold text-lg leading-none">DAISHI <span class="gold">TONTINE</span></p>
+<p class="text-[11px] text-white/80">Tontine Argent by Nassara • Votre confiance, notre priorité</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button onclick="showPage('connexion')" class="bg-white text-[#2A0A4A] px-4 py-2 rounded-full text-sm font-bold">Connexion</button>
+<button onclick="showPage('inscription')" class="bg-[#F2C94C] text-black px-4 py-2 rounded-full text-sm font-bold">Créer un compte</button>
+</div>
+</div>
+</header>
+
+<!-- ===== HERO AVEC LOGO EN GRAND ===== -->
+<section id="hero" class="hero text-white pb-10 pt-6">
+<div class="max-w-6xl mx-auto px-4">
+<!-- LOGO EN GRAND CENTRÉ -->
+<div class="text-center mb-6">
+<img src="logo.png" alt="Logo Daishi Tontine" class="w-32 h-32 mx-auto rounded-full border-4 border-[#F2C94C] object-cover shadow-2xl bg-white">
+<p class="text-[#F2C94C] font-extrabold mt-3 text-lg">Épargner ensemble, réaliser vos projets !</p>
+<p class="text-white/80 text-sm">800F / jour • 2.750F / soir • 5.500F / semaine • 11.000F / mois</p>
+<div class="flex justify-center gap-2 mt-3 flex-wrap">
+<span class="bg-white/10 px-3 py-1 rounded-full text-xs">📞 55 44 10 10</span>
+<span class="bg-white/10 px-3 py-1 rounded-full text-xs">📞 65 47 19 96</span>
+<span class="bg-[#F2C94C] text-black px-3 py-1 rounded-full text-xs font-bold">✅ 100% Vérifié</span>
+</div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-8 items-center">
+<div>
+<div class="inline-flex bg-white/10 px-3 py-1 rounded-full text-xs">✅ 100% Vérifié • Orange Money / Moov Money</div>
+<h1 class="text-4xl md:text-5xl font-extrabold leading-tight mt-4">Ta tontine,<br><span class="gold">sans cahier,</span><br>sans stress.</h1>
+<p class="text-white/80 mt-3">Paie ta tontine en 30 secondes. Chaque paiement est vérifié par son ID de transaction. Aucun faux reçu ne passe. La Maman reçoit l'argent, toi tu reçois ta preuve.</p>
+<div class="flex gap-3 mt-5">
+<button onclick="showPage('inscription')" class="bg-[#F2C94C] text-black px-6 py-3 rounded-full font-bold">Rejoindre une tontine →</button>
+<button onclick="showPage('creer')" class="bg-white/10 border border-white/20 px-5 py-3 rounded-full font-bold">Créer mon groupe</button>
+</div>
+<div class="flex gap-6 mt-6 text-sm"><div><b class="text-xl">1 250+</b><br><span class="text-white/60">Membres</span></div><div><b class="text-xl">18,5M FCFA</b><br><span class="text-white/60">Distribués</span></div><div><b class="text-xl">0</b><br><span class="text-white/60">Faux reçu</span></div></div>
+</div>
+<div class="bg-white text-black rounded-[24px] p-5 shadow-2xl">
+<div class="flex justify-between items-center"><b>🔍 Vérifier un paiement</b><span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">En direct</span></div>
+<p class="text-sm text-gray-500 mt-1">Entre ton ID Orange / Moov pour voir si l'argent est vraiment arrivé.</p>
+<input id="checkTx" placeholder="Ex: MP241121.1234.A123" class="w-full mt-3 border rounded-xl px-4 py-3 text-sm">
+<button onclick="verifierIDPublic()" class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-2">Vérifier maintenant</button>
+<div id="checkResult" class="hidden mt-3 p-3 rounded-xl text-sm"></div>
+<div class="grid grid-cols-3 gap-2 mt-4 text-center text-xs">
+<div class="bg-[#F7F8F7] p-3 rounded-xl">🧾<br><b>Reçu PDF</b><br>Automatique</div>
+<div class="bg-[#F7F8F7] p-3 rounded-xl">🔒<br><b>ID Unique</b><br>Anti-doublon</div>
+<div class="bg-[#F7F8F7] p-3 rounded-xl">📲<br><b>SMS / WhatsApp</b><br>À la Maman</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="max-w-6xl mx-auto px-4 -mt-2">
+<div class="bg-white rounded-full p-1 flex gap-1 shadow card overflow-x-auto">
+<button onclick="showPage('payer')" id="btn-payer" class="tab-active flex-1 py-2.5 rounded-full text-sm font-bold whitespace-nowrap">💰 Payer ma tontine</button>
+<button onclick="showPage('maman')" id="btn-maman" class="flex-1 py-2.5 rounded-full text-sm font-bold whitespace-nowrap">👑 Espace Maman</button>
+<button onclick="showPage('historique')" id="btn-historique" class="flex-1 py-2.5 rounded-full text-sm font-bold whitespace-nowrap">📜 Mon historique</button>
+<button onclick="showPage('creer')" id="btn-creer" class="flex-1 py-2.5 rounded-full text-sm font-bold whitespace-nowrap">➕ Créer groupe</button>
+</div>
+</div>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+<div id="page-payer" class="grid md:grid-cols-2 gap-5">
+<div class="bg-white rounded-[20px] p-5 card">
+<h2 class="font-extrabold text-xl">💰 Payer ma tontine</h2>
+<p class="text-sm text-gray-500">1. Paie sur le numéro de la Maman. 2. Tape ton ID. 3. La plateforme vérifie.</p>
+<label class="text-xs font-bold mt-4 block">CODE GROUPE</label>
+<select id="payGroupe" class="w-full border rounded-xl px-3 py-3 mt-1"></select>
+<label class="text-xs font-bold mt-3 block">MÉTHODE DE PAIEMENT</label>
+<div class="grid grid-cols-3 gap-2 mt-1">
+<button onclick="setMethode('Orange Money',this)" class="methode-btn border rounded-xl py-2.5 text-sm font-bold bg-orange-50 border-orange-300">🟠 Orange</button>
+<button onclick="setMethode('Moov Money',this)" class="methode-btn border rounded-xl py-2.5 text-sm font-bold">🔵 Moov</button>
+<button onclick="setMethode('Telecel Money',this)" class="methode-btn border rounded-xl py-2.5 text-sm font-bold">🔴 Telecel</button>
+</div>
+<div class="bg-[#FFF8E1] border border-yellow-200 rounded-xl p-3 mt-3 text-sm">Envoie <b id="montantAffiche">—</b> sur le numéro de la Maman : <b id="numMamanAffiche">—</b><br><span class="text-xs">Après paiement, tu reçois un SMS avec ton ID. Copie-le ici.</span></div>
+<label class="text-xs font-bold mt-3 block">ID DE TRANSACTION *</label>
+<input id="txid" placeholder="MP... ou CI..." class="w-full border rounded-xl px-3 py-3 mt-1 uppercase">
+<label class="text-xs font-bold mt-3 block">CAPTURE D'ÉCRAN (Preuve)</label>
+<input type="file" id="captureFile" accept="image/*" class="w-full border rounded-xl px-3 py-2 mt-1 text-sm">
+<div id="capturePreview" class="mt-2"></div>
+<button onclick="payerTontine()" class="w-full bg-[#F2C94C] py-3.5 rounded-xl font-extrabold mt-4">✅ Vérifier & Payer — <span id="btnMontant">—</span></button>
+<div id="ocrResult" class="hidden mt-3 p-3 rounded-xl text-sm"></div>
+<p class="text-[11px] text-gray-400 mt-2 text-center">🔒 Chaque ID ne peut être utilisé qu'une seule fois. Faux ID = rejet automatique.</p>
+</div>
+<div class="space-y-4">
+<div class="bg-[#2A0A4A] text-white rounded-[20px] p-5">
+<h3 class="font-bold">Comment ça marche ?</h3>
+<ol class="text-sm text-white/80 mt-2 space-y-2">
+<li><b class="text-white">1. Tu paies</b> — Orange / Moov sur le numéro de la Maman</li>
+<li><b class="text-white">2. Tu tapes l'ID</b> — C'est dans ton SMS après paiement</li>
+<li><b class="text-white">3. La plateforme vérifie</b> — Format, doublon, existence réelle</li>
+<li><b class="text-white">4. La Maman valide</b> — Si CinetPay n'est pas encore activé</li>
+</ol>
+</div>
+<div class="bg-white rounded-[20px] p-5 card">
+<h3 class="font-bold">📜 Historique récent</h3>
+<div id="historiqueList" class="mt-3 space-y-2 text-sm"></div>
+</div>
+<!-- CARTE FORMULES TONTINE - COMME SUR TON AFFICHE -->
+<div class="bg-white rounded-[20px] p-5 card">
+<h3 class="font-bold">💰 Nos Formules Tontine Argent</h3>
+<div class="grid grid-cols-2 gap-2 mt-3 text-sm">
+<div class="bg-[#F3E8FF] p-3 rounded-xl text-center"><b>800F / jour</b><br><span class="text-xs text-gray-500">Pour commencer doucement</span></div>
+<div class="bg-[#FEF3C7] p-3 rounded-xl text-center"><b>2.750F / soir</b><br><span class="text-xs text-gray-500">Pour les commerçantes</span></div>
+<div class="bg-[#F3E8FF] p-3 rounded-xl text-center"><b>5.500F / semaine</b><br><span class="text-xs text-gray-500">La plus populaire</span></div>
+<div class="bg-[#FEF3C7] p-3 rounded-xl text-center"><b>11.000F / mois</b><br><span class="text-xs text-gray-500">Pour les gros projets</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="page-maman" class="hidden bg-white rounded-[20px] p-5 card">
+<h2 class="font-extrabold text-xl">👑 Espace Maman</h2>
+<p class="text-sm text-gray-500">Paiements en attente à valider après avoir vérifié ton SMS Orange / Moov.</p>
+<div id="listeAttente" class="mt-4 space-y-2"></div>
+</div>
+
+<div id="page-creer" class="hidden bg-white rounded-[20px] p-5 card max-w-lg">
+<h2 class="font-extrabold text-xl">➕ Créer mon groupe</h2>
+<input id="nomGroupe" placeholder="Nom du groupe ex: Tontine Espoir" class="w-full border rounded-xl px-3 py-3 mt-3">
+<input id="montantGroupe" type="number" placeholder="Montant par tour ex: 5500" class="w-full border rounded-xl px-3 py-3 mt-2">
+<input id="mamanTel" placeholder="Téléphone de la Maman ex: 55441010" class="w-full border rounded-xl px-3 py-3 mt-2">
+<input id="mamanNom" placeholder="Nom de la Maman" class="w-full border rounded-xl px-3 py-3 mt-2">
+<button onclick="creerGroupe()" class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-3">Créer le groupe</button>
+<div id="codeCree" class="hidden mt-3 bg-green-50 p-3 rounded-xl text-sm"></div>
+</div>
+
+<div id="page-inscription" class="hidden bg-white rounded-[20px] p-5 card max-w-lg mx-auto">
+<h2 class="font-extrabold text-xl">Créer un compte</h2>
+<input id="insPrenom" placeholder="Prénom" class="w-full border rounded-xl px-3 py-3 mt-3">
+<input id="insNom" placeholder="Nom" class="w-full border rounded-xl px-3 py-3 mt-2">
+<input id="insTel" placeholder="Téléphone ex: 70000000" class="w-full border rounded-xl px-3 py-3 mt-2">
+<input id="insPass" type="password" placeholder="Mot de passe" class="w-full border rounded-xl px-3 py-3 mt-2">
+<button onclick="inscrire()" class="w-full bg-[#F2C94C] py-3 rounded-xl font-extrabold mt-3">Créer mon compte</button>
+</div>
+
+<div id="page-connexion" class="hidden bg-white rounded-[20px] p-5 card max-w-lg mx-auto">
+<h2 class="font-extrabold text-xl">Connexion</h2>
+<input id="logTel" placeholder="Téléphone" class="w-full border rounded-xl px-3 py-3 mt-3">
+<input id="logPass" type="password" placeholder="Mot de passe" class="w-full border rounded-xl px-3 py-3 mt-2">
+<button onclick="connecter()" class="w-full bg-[#2A0A4A] text-white py-3 rounded-xl font-bold mt-3">Se connecter</button>
+</div>
+
+<div id="page-historique" class="hidden bg-white rounded-[20px] p-5 card">
+<h2 class="font-extrabold text-xl">📜 Mon historique</h2>
+<div id="historiqueMembre" class="mt-3 space-y-2 text-sm"></div>
+</div>
+</main>
+
+<footer class="text-center text-xs text-gray-400 py-6">
+<img src="logo.png" class="w-10 h-10 mx-auto rounded-full object-cover mb-2 border border-[#F2C94C]">
+© 2026 Daishi Tontine — Tontine Argent by Nassara — Ouagadougou, Burkina Faso<br>Paiement vérifié • ID unique • 100% Sécurisé • 55 44 10 10 / 65 47 19 96
+</footer>
+
+<script>
+// ===== CONFIG - METS TES CLÉS SUPABASE ICI =====
+const SUPABASE_URL = "https://TON-PROJET.supabase.co";
+const SUPABASE_KEY = "eyJ...TON-ANON-KEY...";
+const CINETPAY_API_KEY = "";
+const CINETPAY_SITE_ID = "";
+let supabaseClient = null;
+try{ supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); }catch(e){ console.log("Supabase en mode local"); }
+
+let TONTINES = JSON.parse(localStorage.getItem('tontines')||'[]');
+let PAIEMENTS = JSON.parse(localStorage.getItem('paiements_tontine')||'[]');
+let TRANSACTIONS = JSON.parse(localStorage.getItem('transactions_verifiees')||'[]');
+let utilisateurActuel = JSON.parse(localStorage.getItem('user_daishi')||'null');
+let methodePay = 'Orange Money';
+let captureBase64 = '';
+
+if(TONTINES.length===0){
+  TONTINES = [
+    {code_groupe:'JOUR-800', nom_groupe:'Tontine Jour - 800F', montant:800, maman_tel:'55441010', maman_nom:'Nassara'},
+    {code_groupe:'SOIR-2750', nom_groupe:'Tontine Soir - 2.750F', montant:2750, maman_tel:'55441010', maman_nom:'Nassara'},
+    {code_groupe:'SEMAINE-5500', nom_groupe:'Tontine Semaine - 5.500F', montant:5500, maman_tel:'55441010', maman_nom:'Nassara'},
+    {code_groupe:'MOIS-11000', nom_groupe:'Tontine Mois - 11.000F', montant:11000, maman_tel:'65471996', maman_nom:'Nassara'}
+  ];
+  localStorage.setItem('tontines', JSON.stringify(TONTINES));
+}
+
+function showPage(n){
+  ['payer','maman','historique','creer','inscription','connexion'].forEach(p=>{
+    let el=document.getElementById('page-'+p); if(el) el.classList.add('hidden');
+    let btn=document.getElementById('btn-'+p); if(btn) btn.classList.remove('tab-active');
+  });
+  let target=document.getElementById('page-'+n); if(target) target.classList.remove('hidden');
+  let b=document.getElementById('btn-'+n); if(b) b.classList.add('tab-active');
+  document.getElementById('hero').style.display = (n==='payer') ? 'block':'none';
+  if(n==='payer') remplirGroupes();
+  if(n==='maman') afficherAttente();
+  if(n==='historique') afficherHistoriqueMembre();
+}
+function remplirGroupes(){
+  let sel=document.getElementById('payGroupe'); sel.innerHTML='';
+  TONTINES.forEach(t=>{ let o=document.createElement('option'); o.value=t.code_groupe; o.textContent=t.nom_groupe+' — '+t.montant+'F — Maman: '+t.maman_nom; sel.appendChild(o); });
+  updateMontant(); sel.onchange=updateMontant;
+}
+function updateMontant(){
+  let code=document.getElementById('payGroupe').value;
+  let t=TONTINES.find(x=>x.code_groupe===code); if(!t) return;
+  document.getElementById('montantAffiche').textContent=t.montant+'F';
+  document.getElementById('numMamanAffiche').textContent=t.maman_tel;
+  document.getElementById('btnMontant').textContent=t.montant+'F';
+}
+function setMethode(m, btn){
+  methodePay=m; document.querySelectorAll('.methode-btn').forEach(b=>b.classList.remove('bg-orange-50','border-orange-300'));
+  btn.classList.add('bg-orange-50','border-orange-300');
+}
+document.getElementById('captureFile')?.addEventListener('change', e=>{
+  let f=e.target.files[0]; if(!f) return;
+  let r=new FileReader(); r.onload=()=>{ captureBase64=r.result; document.getElementById('capturePreview').innerHTML=`<img src="${captureBase64}" class="w-32 h-32 object-cover rounded-xl border">`; }; r.readAsDataURL(f);
+});
+async function verifierExistenceReelle(txId, montantAttendu){
+  txId=txId.trim().toUpperCase().replace(/\s/g,'');
+  if(TRANSACTIONS.find(t=>t.transaction_id===txId)) return {existe:false, raison:"❌ Cet ID a déjà été utilisé. Impossible de le réutiliser.", enAttente:false};
+  if(txId.length<8) return {existe:false, raison:"❌ ID trop court. Vérifie ton SMS Orange / Moov.", enAttente:false};
+  if(CINETPAY_API_KEY && CINETPAY_SITE_ID){
+    try{
+      let res=await fetch('https://api.cinetpay.com/v1/check-transaction',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({apikey:CINETPAY_API_KEY,site_id:CINETPAY_SITE_ID,transaction_id:txId})});
+      let data=await res.json();
+      if(!data.data) return {existe:false, raison:"❌ ID introuvable dans les dépôts reçus.", enAttente:false};
+      let montantRecu=parseFloat(data.data.amount||0);
+      if(montantRecu!==montantAttendu) return {existe:false, raison:`❌ Montant incorrect. Attendu ${montantAttendu}F, reçu ${montantRecu}F.`, enAttente:false};
+      return {existe:true, raison:`✅ Vérifié par CinetPay : ${montantRecu}F reçus, ID ${txId} existe vraiment.`};
+    }catch(e){ return {existe:false, raison:"⏳ Impossible de joindre CinetPay. Paiement mis en attente.", enAttente:true}; }
+  }
+  return {existe:false, raison:"⏳ Mode sans CinetPay : Paiement en attente. La Maman va vérifier dans son SMS Orange / Moov si l'argent est bien arrivé, puis valider.", enAttente:true};
+}
+async function payerTontine(){
+  let code=document.getElementById('payGroupe').value;
+  let t=TONTINES.find(x=>x.code_groupe===code); if(!t) return alert('Choisis un groupe');
+  let txId=document.getElementById('txid').value.trim().toUpperCase();
+  if(!txId) return alert('Tape ton ID de transaction. Tu le trouves dans le SMS après paiement.');
+  let box=document.getElementById('ocrResult'); box.classList.remove('hidden'); box.className='mt-3 p-3 rounded-xl text-sm verif-wait'; box.innerHTML='🔍 Vérification en cours... La plateforme vérifie si l’ID <b>'+txId+'</b> existe vraiment...';
+  let verif=await verifierExistenceReelle(txId, t.montant);
+  if(!verif.existe && !verif.enAttente){ box.className='mt-3 p-3 rounded-xl text-sm verif-ko'; box.innerHTML=verif.raison; return; }
+  if(verif.enAttente){
+    let p={tel_membre:utilisateurActuel?.tel||'Anonyme', nom_membre:utilisateurActuel?utilisateurActuel.prenom+' '+utilisateurActuel.nom:'Membre', code_groupe:code, montant:t.montant, methode:methodePay, transaction_id:txId, capture:captureBase64, statut:'⏳ En attente - Maman doit vérifier SMS', date_paiement:new Date().toISOString().slice(0,10)};
+    PAIEMENTS.push(p); localStorage.setItem('paiements_tontine', JSON.stringify(PAIEMENTS));
+    if(supabaseClient) try{ await supabaseClient.from('paiements_tontine').insert([p]); }catch(e){}
+    box.className='mt-3 p-3 rounded-xl text-sm verif-wait'; box.innerHTML=verif.raison+'<br><br>⏳ Ton paiement est en attente.';
+    alert('⏳ Paiement en attente. La Maman va vérifier son SMS.'); afficherHistoriqueMembre(); return;
+  }
+  let tx={transaction_id:txId, tel_membre:utilisateurActuel?.tel||'Anonyme', code_groupe:code, montant:t.montant, created_at:new Date().toLocaleString('fr-FR')};
+  TRANSACTIONS.push(tx); localStorage.setItem('transactions_verifiees', JSON.stringify(TRANSACTIONS));
+  let p={tel_membre:utilisateurActuel?.tel||'Anonyme', nom_membre:utilisateurActuel?utilisateurActuel.prenom+' '+utilisateurActuel.nom:'Membre', code_groupe:code, montant:t.montant, methode:methodePay, transaction_id:txId, capture:captureBase64, statut:'✅ Validé - Vérifié', date_paiement:new Date().toISOString().slice(0,10)};
+  PAIEMENTS.push(p); localStorage.setItem('paiements_tontine', JSON.stringify(PAIEMENTS));
+  if(supabaseClient) try{ await supabaseClient.from('paiements_tontine').insert([p]); await supabaseClient.from('transactions_verifiees').insert([tx]); }catch(e){}
+  box.className='mt-3 p-3 rounded-xl text-sm verif-ok'; box.innerHTML='✅ <b>PAIEMENT VÉRIFIÉ !</b><br>'+verif.raison+'<br>ID : '+txId;
+  alert('✅ Paiement vérifié !'); afficherHistoriqueMembre();
+}
+function verifierIDPublic(){
+  let tx=document.getElementById('checkTx').value.trim().toUpperCase();
+  let box=document.getElementById('checkResult'); box.classList.remove('hidden');
+  if(!tx) { box.className='mt-3 p-3 rounded-xl text-sm verif-ko'; box.innerHTML='Tape un ID pour vérifier.'; return; }
+  let found=TRANSACTIONS.find(t=>t.transaction_id===tx);
+  if(found){ box.className='mt-3 p-3 rounded-xl text-sm verif-ok'; box.innerHTML=`✅ ID <b>${tx}</b> déjà utilisé le ${found.created_at} pour ${found.code_groupe} - ${found.montant}F`; }
+  else { let p=PAIEMENTS.find(x=>x.transaction_id===tx); if(p){ box.className='mt-3 p-3 rounded-xl text-sm verif-wait'; box.innerHTML=`⏳ ID <b>${tx}</b> trouvé, statut : ${p.statut}`; } else { box.className='mt-3 p-3 rounded-xl text-sm verif-ko'; box.innerHTML=`❌ ID <b>${tx}</b> introuvable.`; } }
+}
+function afficherAttente(){
+  let div=document.getElementById('listeAttente');
+  let att=PAIEMENTS.filter(p=>p.statut.includes('En attente'));
+  if(att.length===0) div.innerHTML='<p class="text-sm text-gray-400">Aucun paiement en attente. Tout est à jour 👑</p>';
+  else div.innerHTML=att.map((p,i)=>`<div class="border rounded-xl p-3 flex justify-between items-center"><div><b>${p.nom_membre}</b> — ${p.code_groupe} — ${p.montant}F<br><span class="text-xs">ID: ${p.transaction_id} • ${p.methode}</span></div><button onclick="validerPaiement(${PAIEMENTS.indexOf(p)})" class="bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-bold">Valider ✓</button></div>`).join('');
+}
+function validerPaiement(idx){
+  PAIEMENTS[idx].statut='✅ Validé par la Maman';
+  TRANSACTIONS.push({transaction_id:PAIEMENTS[idx].transaction_id, tel_membre:PAIEMENTS[idx].tel_membre, code_groupe:PAIEMENTS[idx].code_groupe, montant:PAIEMENTS[idx].montant, created_at:new Date().toLocaleString('fr-FR')});
+  localStorage.setItem('paiements_tontine', JSON.stringify(PAIEMENTS));
+  localStorage.setItem('transactions_verifiees', JSON.stringify(TRANSACTIONS));
+  alert('✅ Validé !'); afficherAttente(); afficherHistoriqueMembre();
+}
+function afficherHistoriqueMembre(){
+  let div=document.getElementById('historiqueMembre'); let div2=document.getElementById('historiqueList');
+  let html = PAIEMENTS.slice(-5).reverse().map(p=>`<div class="border rounded-xl p-3 flex justify-between"><div><b>${p.code_groupe}</b> — ${p.nom_membre}<br><span class="text-xs">ID: ${p.transaction_id}</span></div><div class="text-right"><b>${p.montant}F</b><br><span class="text-xs">${p.statut}</span></div></div>`).join('') || '<p class="text-gray-400">Aucun paiement pour l’instant.</p>';
+  if(div) div.innerHTML=html; if(div2) div2.innerHTML=html;
+}
+function creerGroupe(){
+  let nom=document.getElementById('nomGroupe').value.trim();
+  let montant=parseInt(document.getElementById('montantGroupe').value);
+  let mTel=document.getElementById('mamanTel').value.trim();
+  let mNom=document.getElementById('mamanNom').value.trim();
+  if(!nom||!montant||!mTel) return alert('Remplis tout');
+  let code=nom.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)+'-'+montant;
+  let g={code_groupe:code, nom_groupe:nom, montant, maman_tel:mTel, maman_nom:mNom||'Maman'};
+  TONTINES.push(g); localStorage.setItem('tontines', JSON.stringify(TONTINES));
+  if(supabaseClient) supabaseClient.from('tontines').insert([g]).then(()=>{});
+  let box=document.getElementById('codeCree'); box.classList.remove('hidden'); box.innerHTML=`✅ Groupe créé !<br><b>Code : ${code}</b><br>Partage ce code à tes membres.`;
+  remplirGroupes();
+}
+function inscrire(){
+  let u={prenom:document.getElementById('insPrenom').value, nom:document.getElementById('insNom').value, tel:document.getElementById('insTel').value, pass:document.getElementById('insPass').value};
+  if(!u.tel||!u.pass) return alert('Remplis téléphone + mot de passe');
+  utilisateurActuel=u; localStorage.setItem('user_daishi', JSON.stringify(u));
+  if(supabaseClient) supabaseClient.from('membres').insert([{prenom:u.prenom,nom:u.nom,tel:u.tel,mot_de_passe:u.pass}]).then(()=>{});
+  alert('✅ Compte créé, bienvenue '+u.prenom+' !'); showPage('payer');
+}
+function connecter(){
+  let tel=document.getElementById('logTel').value;
+  utilisateurActuel={tel, prenom:'Membre', nom:''}; localStorage.setItem('user_daishi', JSON.stringify(utilisateurActuel));
+  alert('✅ Connecté !'); showPage('payer');
+}
+remplirGroupes(); afficherHistoriqueMembre();
+</script>
+</body>
+</html>
